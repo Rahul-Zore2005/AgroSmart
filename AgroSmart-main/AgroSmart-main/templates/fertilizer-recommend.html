@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Forecast</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="icon" type="image/png" href="../static/image/Untitled design.png" />
+    <link rel="stylesheet" href="../static/css/fertilizer.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1 class="logo">AgroSmart</h1>
+        <div class="nav-right">
+          <nav>
+            <ul>
+              <li><a href="dashboard.html">Dashboard</a></li>
+              <li><a href="crop-recommend.html">Recommend Crop</a></li>
+              <li><a href="yeild-predict.html">Predict Yield</a></li>
+              <li><a href="weather-forecast.html">Weather Forecast</a></li>
+              <li>
+                <a href="fertilizer-recommend.html"
+                  >Fertilizer Recommendation</a
+                >
+              </li>
+              <li><a href="analysis.html">Analysis</a></li>
+            </ul>
+          </nav>
+          <div class="user-menu">
+            <img
+              src="../static/image/user-logo.png"
+              alt="User"
+              class="user-icon"
+              onclick="toggleUserMenu()"
+            />
+            <div class="user-dropdown" id="user-dropdown">
+              <a href="profile.html">View Profile</a>
+              <a href="index.html" onclick="logout()">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <section class="fertilizer-section">
+        <div class="container">
+            <h1>Fertilizer Recommender</h1>
+            <form id="fertilizer-form">
+                <div class="form-group">
+                    <label for="temperature">Temperature</label>
+                    <input type="number" id="temperature" name="temperature" required>
+                </div>
+                <div class="form-group">
+                    <label for="humidity">Humidity</label>
+                    <input type="number" id="humidity" name="humidity" required>
+                </div>
+                <div class="form-group">
+                    <label for="soilMoisture">Soil Moisture</label>
+                    <input type="number" id="soilMoisture" name="soilMoisture" required>
+                </div>
+                <div class="form-group">
+                    <label for="soilType">Soil Type</label>
+                    <input type="text" id="soilType" name="soilType" required>
+                </div>
+                <div class="form-group">
+                    <label for="cropType">Crop Type</label>
+                    <input type="text" id="cropType" name="cropType" required>
+                </div>
+                <div class="form-group">
+                    <label for="nitrogen">Nitrogen</label>
+                    <input type="number" id="nitrogen" name="nitrogen" required>
+                </div>
+                <div class="form-group">
+                    <label for="potassium">Potassium</label>
+                    <input type="number" id="potassium" name="potassium" required>
+                </div>
+                <div class="form-group">
+                    <label for="phosphorous">Phosphorous</label>
+                    <input type="number" id="phosphorous" name="phosphorous" required>
+                </div>
+                <button type="submit" class="btn-primary">Recommend Fertilizer</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 AgroSmart. All rights reserved.</p>
+    </footer>
+
+    <script src="../static/js/fer.js"></script>
+</body>
+</html>
