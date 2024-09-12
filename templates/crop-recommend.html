@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crop Recommend</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="icon"
+      type="image/png"
+      href="../static/image/Untitled design.png"
+    />
+    <link rel="stylesheet" href="../static/css/crop-rec.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1 class="logo">AgroSmart</h1>
+        <div class="nav-right">
+          <nav>
+            <ul>
+              <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+              <li>
+                <a href="{{ url_for('crop_recommend') }}">Recommend Crop</a>
+              </li>
+              <li>
+                <a href="{{ url_for('yield_predict') }}">Predict Yield</a>
+              </li>
+              <li>
+                <a href="{{ url_for('weather_forecast') }}">Weather Forecast</a>
+              </li>
+              <li>
+                <a href="{{ url_for('fertilizer_recommend') }}"
+                  >Fertilizer Recommendation</a
+                >
+              </li>
+              <li><a href="{{ url_for('analysis') }}">Analysis</a></li>
+            </ul>
+          </nav>
+          <div class="user-menu">
+            <img
+              src="../static/image/user-logo.png"
+              alt="User"
+              class="user-icon"
+              onclick="toggleUserMenu()"
+            />
+            <div class="user-dropdown" id="user-dropdown">
+              <a href="{{ url_for('profile') }}">View Profile</a>
+              <a href="{{ url_for('logout') }}" onclick="logout()">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="recommendation-section">
+      <div class="container">
+        <h1>Crop Recommender</h1>
+        <form method="POST" action="{{ url_for('crop_recommend') }}">
+          <div class="mb-3">
+            <label for="nitrogen" class="form-label">Nitrogen (N):</label>
+            <input
+              type="number"
+              class="form-control"
+              id="nitrogen"
+              name="nitrogen"
+              min="0"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="phosphorus" class="form-label">Phosphorus (P):</label>
+            <input
+              type="number"
+              class="form-control"
+              id="phosphorus"
+              name="phosphorus"
+              min="0"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="potassium" class="form-label">Potassium (K):</label>
+            <input
+              type="number"
+              class="form-control"
+              id="potassium"
+              name="potassium"
+              min="0"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="temperature" class="form-label"
+              >Temperature (°C):</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              id="temperature"
+              name="temperature"
+              min="0"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="humidity" class="form-label">Humidity (%):</label>
+            <input
+              type="number"
+              class="form-control"
+              id="humidity"
+              name="humidity"
+              min="0"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="phValue" class="form-label">Soil pH Value:</label>
+            <input
+              type="number"
+              step="0.1"
+              class="form-control"
+              id="phValue"
+              name="phValue"
+              min="0"
+              max="14"
+              required
+            />
+          </div>
+          <div class="mb-3">
+            <label for="rainfall" class="form-label"
+              >Annual Rainfall (mm):</label
+            >
+            <input
+              type="number"
+              class="form-control"
+              id="rainfall"
+              name="rainfall"
+              min="0"
+              required
+            />
+          </div>
+          <button type="submit" class="btn btn-primary">
+            Get Recommendation
+          </button>
+        </form>
+
+        <div class="mt-4 alert alert-info">
+          {% if prediction %}
+          <!-- Display recommended crop -->
+          <h2>Recommended Crop: {{ prediction }}</h2>
+
+          <!-- Display the crop image, assuming images are stored with names matching the crop prediction -->
+          <img
+            src="{{ url_for('static', filename='image/crops/' + prediction + '.jpg') }}"
+            alt="{{ prediction }}"
+            style="
+              display: block;
+              margin: 0 auto;
+              max-width: 100%;
+              height: auto;
+            "
+          />
+
+          <!-- Display a common statement below the image -->
+          <p>
+            Based on the current conditions, the best crop for you to grow is
+            <strong>{{ prediction }}</strong>. {% else %}
+          </p>
+
+          <p>
+            Please provide the necessary details to get a crop recommendation.
+          </p>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2024 AgroSmart. All rights reserved.</p>
+    </footer>
+    <script>
+      // Toggle user dropdown menu
+      function toggleUserMenu() {
+        const userDropdown = document.getElementById("user-dropdown");
+        userDropdown.classList.toggle("show");
+      }
+
+      function logout() {
+        window.location.href = "{{ url_for('logout') }}";
+      }
+
+      // Close the dropdown if the user clicks outside of it
+      window.onclick = function (event) {
+        if (!event.target.matches(".user-icon")) {
+          const dropdowns = document.getElementsByClassName("user-dropdown");
+          for (let i = 0; i < dropdowns.length; i++) {
+            const openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains("show")) {
+              openDropdown.classList.remove("show");
+            }
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Crop Yield</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="icon"
+      type="image/png"
+      href="../static/image/Untitled design.png"
+    />
+    <link rel="stylesheet" href="../static/css/crop-yeild.css" />
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <h1 class="logo">AgroSmart</h1>
+        <div class="nav-right">
+          <nav>
+            <ul>
+              <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+              <li>
+                <a href="{{ url_for('crop_recommend') }}">Recommend Crop</a>
+              </li>
+              <li>
+                <a href="{{ url_for('yield_predict') }}">Predict Yield</a>
+              </li>
+              <li>
+                <a href="{{ url_for('weather_forecast') }}">Weather Forecast</a>
+              </li>
+              <li>
+                <a href="{{ url_for('fertilizer_recommend') }}"
+                  >Fertilizer Recommendation</a
+                >
+              </li>
+              <li><a href="{{ url_for('analysis') }}">Analysis</a></li>
+            </ul>
+          </nav>
+          <div class="user-menu">
+            <img
+              src="../static/image/user-logo.png"
+              alt="User"
+              class="user-icon"
+              onclick="toggleUserMenu()"
+            />
+            <div class="user-dropdown" id="user-dropdown">
+              <a href="{{ url_for('profile') }}">View Profile</a>
+              <a href="{{ url_for('logout') }}" onclick="logout()">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="prediction-section">
+      <div class="container">
+        <h1>Yield Prediction</h1>
+        <form
+          id="yield-prediction-form"
+          method="POST"
+          action="{{ url_for('yield_predict') }}"
+        >
+          <div class="mb-3">
+            <label for="Year">Year:</label>
+            <input type="number" id="Year" name="Year" required />
+          </div>
+          <div class="mb-3">
+            <label for="average_rain_fall_mm_per_year"
+              >Average Rainfall (mm/year):</label
+            >
+            <input
+              type="number"
+              id="average_rain_fall_mm_per_year"
+              name="average_rain_fall_mm_per_year"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="pesticides_tonnes">Pesticides (tonnes):</label>
+            <input
+              type="number"
+              id="pesticides_tonnes"
+              name="pesticides_tonnes"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="avg_temp">Average Temperature (°C):</label>
+            <input
+              type="number"
+              id="avg_temp"
+              name="avg_temp"
+              step="0.01"
+              min="0"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="Area">Area:</label>
+            <input type="text" id="Area" name="Area" required />
+          </div>
+
+          <div class="mb-3">
+            <label for="Item">Item:</label>
+            <input type="text" id="Item" name="Item" required />
+          </div>
+
+          <button type="submit" class="btn-primary">Predict Yield</button>
+        </form>
+
+        <div class="mt-4 alert alert-info">
+          {% if prediction %}
+          <h2>Yeild Predicted: {{ prediction }} kg/ha</h2>
+          {% else %}
+          <p>Please provide the necessary details for yeild prediction.</p>
+          {% endif %}
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; 2024 AgroSmart. All rights reserved.</p>
+    </footer>
+    <script>
+      // Toggle user dropdown menu
+      function toggleUserMenu() {
+        const userDropdown = document.getElementById("user-dropdown");
+        userDropdown.classList.toggle("show");
+      }
+
+      function logout() {
+        window.location.href = "{{ url_for('logout') }}";
+      }
+
+      // Close the dropdown if the user clicks outside of it
+      window.onclick = function (event) {
+        if (!event.target.matches(".user-icon")) {
+          const dropdowns = document.getElementsByClassName("user-dropdown");
+          for (let i = 0; i < dropdowns.length; i++) {
+            const openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains("show")) {
+              openDropdown.classList.remove("show");
+            }
+          }
+        }
+      };
+    </script>
+  </body>
+</html>

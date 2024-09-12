@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AgroSmart Login/Signup</title>
+    <link rel="stylesheet" href="../static/css/styles.css" />
+    <link rel="icon" type="image/png" href="../static/image/user-logo.png" />
+  </head>
+  <body>
+    <div class="container" id="container">
+      <div class="left">
+        <div class="overlay">
+          <p class="quote">
+            “Empowering farmers with AI-driven crop recommendations and yield
+            predictions for a smarter agriculture future.”
+          </p>
+          <p class="author">AgroSmart Team</p>
+        </div>
+      </div>
+      <div class="right">
+        <!-- Display Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %} {% if
+        messages %}
+        <div class="flash-messages">
+          {% for category, message in messages %}
+          <div class="flash-message {{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+        {% endif %} {% endwith %}
+        <!-- Signup Form -->
+        <div class="form-container signup-form" id="signup-form">
+          <h1>Welcome to AgroSmart</h1>
+          <p class="subtitle">Sign up for personalized crop recommendations.</p>
+          <form method="POST" action="{{ url_for('signup') }}">
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Enter your email"
+              required
+            />
+
+            <label for="first-name">Username:</label>
+            <input
+              type="text"
+              id="first-name"
+              name="first-name"
+              placeholder="Enter your Username"
+              required
+            />
+
+            <label for="password">Password:</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="Enter your password"
+              required
+            />
+
+            <button type="submit">Continue to your free account</button>
+          </form>
+          <p class="login">
+            Already have an account? <a href="#" id="show-login">Sign in</a>
+          </p>
+        </div>
+
+        <!-- Login Form -->
+        <div class="form-container login-form" id="login-form">
+          <h1>Sign In</h1>
+          <p class="subtitle">Enter your credentials to access your account.</p>
+          <form method="POST" action="{{ url_for('login') }}">
+            <label for="login-username">Username:</label>
+            <input
+              type="text"
+              id="login-username"
+              name="username"
+              placeholder="Enter your Username"
+              required
+            />
+
+            <label for="login-password">Password:</label>
+            <input
+              type="password"
+              id="login-password"
+              name="password"
+              placeholder="Enter your password"
+              required
+            />
+
+            <button type="submit">Sign In</button>
+          </form>
+          <p class="signup">
+            Don't have an account? <a href="#" id="show-signup">Sign up</a>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flash Messages Styling -->
+    <style>
+      .flash-messages {
+        position: fixed;
+        bottom: 5px;
+        right: 240px;
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        z-index: 1000;
+        width: 300px;
+        text-align: center;
+      }
+      .flash-message {
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
+      .flash-message.error {
+        background-color: #f8d7da;
+        color: #721c24;
+      }
+      .flash-message.success {
+        background-color: #d4edda;
+        color: #155724;
+      }
+    </style>
+
+    <!-- Notification Popup -->
+    <div class="notification" id="notification">
+      <p id="notification-message">Login successful!</p>
+      <button onclick="closeNotification()">×</button>
+    </div>
+
+    <script>
+      const container = document.getElementById("container");
+      const showLogin = document.getElementById("show-login");
+      const showSignup = document.getElementById("show-signup");
+
+      showLogin.addEventListener("click", (e) => {
+        e.preventDefault();
+        container.classList.add("active");
+      });
+
+      showSignup.addEventListener("click", (e) => {
+        e.preventDefault();
+        container.classList.remove("active");
+      });
+
+      // Check query parameter to toggle forms after redirection
+      const urlParams = new URLSearchParams(window.location.search);
+      const formParam = urlParams.get("form");
+
+      if (formParam === "login") {
+        container.classList.add("active"); // Show login form
+      } else {
+        container.classList.remove("active"); // Show signup form by default
+      }
+
+      function closeNotification() {
+        const notification = document.getElementById("notification");
+        notification.classList.remove("show");
+      }
+    </script>
+  </body>
+</html>
