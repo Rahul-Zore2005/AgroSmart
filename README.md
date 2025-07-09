@@ -1,4 +1,5 @@
 AgroSmart : ML Driven Crop Recommender
+
 Introduction 🔍
 Farmers struggle with unpredictable weather, market shifts, and outdated methods in choosing crops. AgroSmart uses machine learning to analyze local soil, climate, and crop data, providing precise recommendations to boost yield, profitability, and sustainability.
 
@@ -35,13 +36,16 @@ Visualization: Provides insights through bar graphs and pie charts for easy unde
 
 Actionable Insights: Delivers tailored recommendations and predictions to optimize farming practices and improve productivity.
 
-Contributors
+Contributors:
 Thanks to the following people for their contributions:
 
 @[**Annsh Yadav**](https://github.com/Annsh10)
+
 @[**Diya Thakkar**](https://github.com/DiyaT8)
+
 @[**Soham Shigvan**](https://github.com/Soham-Edith)
-Conclusion
+
+Conclusion:
 The AgroSmart ML Crop Recommender combines real-time weather data, soil analysis, and market trends to provide precise, data-driven solutions for crop selection, yield prediction, and resource management. It empowers farmers to make informed decisions, enhancing productivity, sustainability, and resilience in agriculture.
 
 License 📄
